@@ -1,6 +1,6 @@
 import requests, PyPDF2, os
 
-from PyPDF2 import errors as PdfError
+from PyPDF2.errors import PdfReadError
 from datetime import datetime as dt
 from time import strftime as date
 
@@ -18,7 +18,7 @@ def download(day:str, month:str) -> None:
 def get_lessons(day:str, month:str, sen:bool) -> bool | list | int:
     try:
         pdf = PyPDF2.PdfReader(f'{day}{month}.pdf')
-    except PdfError.PdfReadError:
+    except PdfReadError:
         os.remove(f'{day}{month}.pdf')
         return 0
     for page_num in range(len(pdf.pages)):
